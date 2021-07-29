@@ -18,12 +18,6 @@ function makeGrid(sideLength = 16) {
     grid.style.gridTemplateRows = `repeat(${sideLength}, 1fr)`;
 }
 
-function turnWhite() {this.style.backgroundColor = "white";}
-function turnRainbow() {
-    let randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    this.style.backgroundColor = "#" + randomColor;
-}
-
 function resizeGrid() {
     const sideLength = prompt("Number of squares per side: ");
     if (sideLength > 100) {
@@ -31,6 +25,12 @@ function resizeGrid() {
         return;
     }
     makeGrid(sideLength);
+}
+
+function turnWhite() {this.style.backgroundColor = "white";}
+function turnRainbow() {
+    let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    this.style.backgroundColor = "#" + randomColor;
 }
 
 function changeWhite() {
@@ -46,6 +46,14 @@ function changeRainbow() {
     boxes.forEach(function (box) {
         box.removeEventListener("mouseover", turnWhite);
         box.addEventListener("mouseover", turnRainbow);
+    });
+}
+
+function clearGrid() {
+    console.log("Reached");
+    const boxes = document.querySelectorAll(".Grid-Box");
+    boxes.forEach(function (box) {
+        box.style.backgroundColor = "black";
     });
 }
 
