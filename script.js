@@ -14,6 +14,7 @@ function makeGrid(sideLength = 16) {
         div.addEventListener("mouseover", turnChalk);
         grid.appendChild(div);
     }
+    clearGrid();
     grid.style.gridTemplateColumns = `repeat(${sideLength}, 1fr)`;
     grid.style.gridTemplateRows = `repeat(${sideLength}, 1fr)`;
 }
@@ -30,7 +31,7 @@ function resizeGrid() {
     makeGrid(sideLength);
 }
 
-function turnChalk() {this.style.backgroundColor = "white";}
+function turnChalk() {this.style.backgroundColor = "#FFF";}
 
 function turnRainbow() {
     let randomColor = Math.floor(Math.random() * 16777215).toString(16);
@@ -84,7 +85,7 @@ function sapColor() {
 function clearGrid() {
     const boxes = document.querySelectorAll(".Grid-Box");
     boxes.forEach(function (box) {
-        box.style.backgroundColor = "black";
+        box.style.backgroundColor = "#000";
     });
 }
 
