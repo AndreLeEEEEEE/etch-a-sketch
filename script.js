@@ -11,7 +11,7 @@ function makeGrid(sideLength = 16) {
         const div = document.createElement("div");
         div.setAttribute("id", i);
         div.classList.add("Grid-Box");
-        div.addEventListener("mouseover", turnWhite);
+        div.addEventListener("mouseover", turnChalk);
         grid.appendChild(div);
     }
     grid.style.gridTemplateColumns = `repeat(${sideLength}, 1fr)`;
@@ -20,37 +20,68 @@ function makeGrid(sideLength = 16) {
 
 function resizeGrid() {
     const sideLength = prompt("Number of squares per side: ");
-    if (sideLength > 100) {
+    if (sideLength === null) {
+        return
+    }
+    else if (sideLength > 100) {
         alert("That number is too high");
         return;
     }
     makeGrid(sideLength);
 }
 
-function turnWhite() {this.style.backgroundColor = "white";}
+function turnChalk() {this.style.backgroundColor = "white";}
+
 function turnRainbow() {
     let randomColor = Math.floor(Math.random() * 16777215).toString(16);
     this.style.backgroundColor = "#" + randomColor;
 }
 
-function changeWhite() {
+function makeLighter() {
+    let color = this.style.backgroundColor;
+    let rgbValues = color.match(/(\d+)/g);
+    for (let i = 0; i < 3; ++i) {
+        rgbValues[i] = Number(rgbValues[i]) + 26;
+        if (rgbValues[i] > 255) {
+            rgbValues[i] -= (rgbValues[i] - 255)
+        }
+        rgbValues[i] = rgbValues[i].toString(16);
+    }
+    this.style.backgroundColor =
+            `#${rgbValues[0]}${rgbValues[1]}${rgbValues[2]}`;
+}
+
+function changeChalk() {
+    const grid = document.querySelector("#Grid-Container");
     const boxes = document.querySelectorAll(".Grid-Box");
     boxes.forEach(function (box) {
-        box.removeEventListener("mouseover", turnRainbow);
-        box.addEventListener("mouseover", turnWhite);
+        let clone = box.cloneNode(true);
+        clone.addEventListener("mouseover", turnChalk);
+        grid.replaceChild(clone, box);
     });
 }
 
 function changeRainbow() {
+    const grid = document.querySelector("#Grid-Container");
     const boxes = document.querySelectorAll(".Grid-Box");
     boxes.forEach(function (box) {
-        box.removeEventListener("mouseover", turnWhite);
-        box.addEventListener("mouseover", turnRainbow);
+        let clone = box.cloneNode(true);
+        clone.addEventListener("mouseover", turnRainbow);
+        grid.replaceChild(clone, box);
+    });
+}
+
+function sapColor() {
+    const grid = document.querySelector("#Grid-Container");
+    const boxes = document.querySelectorAll(".Grid-Box");
+    boxes.forEach(function (box) {
+        let clone = box.cloneNode(true);
+        clone.addEventListener("mouseover", makeLighter);
+        grid.replaceChild(clone, box);
     });
 }
 
 function clearGrid() {
-    console.log("Reached");
     const boxes = document.querySelectorAll(".Grid-Box");
     boxes.forEach(function (box) {
         box.style.backgroundColor = "black";
