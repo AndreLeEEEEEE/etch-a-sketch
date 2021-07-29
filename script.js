@@ -4,6 +4,9 @@ function makeGrid() {
         const div = document.createElement("div");
         div.setAttribute("id", i);
         div.classList.add("Grid-Box");
+        div.addEventListener("mouseover", () => 
+            div.classList.add("hover")
+        );
         grid.appendChild(div);
     }
 }
