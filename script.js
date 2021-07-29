@@ -1,7 +1,12 @@
 function makeGrid(sideLength = 16) {
-    const grid = document.getElementById("Grid-Container");
-    const gridArea = Math.pow(sideLength, 2);
-    for (let i = 0; i < gridArea; ++i) {
+    const grid = document.querySelector("#Grid-Container");
+    while (grid.hasChildNodes()) {
+        const childNode = grid.lastElementChild;
+        grid.removeChild(childNode);
+    }
+
+    const gridSize = Math.pow(sideLength, 2);
+    for (let i = 0; i < gridSize; ++i) {
         const div = document.createElement("div");
         div.setAttribute("id", i);
         div.classList.add("Grid-Box");
